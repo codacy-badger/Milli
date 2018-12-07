@@ -1,0 +1,131 @@
+language: cpp
+distro: trusty
+branches:
+  only:
+    - master
+
+addons:
+  apt:
+    packages:
+      - cmake-data
+      - cmake
+      - libboost-all-dev
+
+script: 
+    - mkdir build
+    - cd build
+    - cmake -DENABLE_TESTING=ON ..
+    - cmake --build .
+    - ctest
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+          packages:
+            - clang-6.0
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+        - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++-6.0"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-7
+          packages:
+            - clang-7
+            - cmake-data
+            - cmake
+            - libboost-all-dev
+      env:
+        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
